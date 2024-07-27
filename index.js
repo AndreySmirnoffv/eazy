@@ -15,13 +15,13 @@ bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const channels = [process.env.CHANNEL_1, process.env.CHANNEL_2];
 
-    let user = db.find(user => user.id === userId);
+    let user = db.find(user => user.id === chatId);
 
     if (msg.text.startsWith('/start')) {
         if (!user) {
             db.push({
-                id: msg.from.id,
-                name: msg.from.first_name,
+                id: userId,
+                name: chatId,
                 chat: msg.chat.id,
                 sovaBalance: 0,
                 SVHCBalance: 0,
