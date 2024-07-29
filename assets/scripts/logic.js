@@ -7,9 +7,9 @@ async function checkUserSubscription(bot, userId, channelId) {
         return isSubscribed;
     } catch (error) {
         if (error.response && error.response.body.error_code === 400) {
-            console.error('Bot is not an admin or channel does not exist');
+            throw Error('Bot is not an admin or channel does not exist');
         } else {
-            console.error('Error checking subscription:', error);
+            throw Error('Error checking subscription:', error);
         }
         return false;
     }
@@ -24,7 +24,6 @@ async function checkUserSubscriptions(bot, userId, channels) {
 async function sendSubscriptionMessage(bot, chatId, channels) {
     const inlineKeyboard = channels.map(channelId => {
         const cleanChannelId = channelId.replace('@', '');
-        console.log(`Sending subscription link for channel: ${cleanChannelId}`);
         return [{ text: "Подпишитесь на канал", url: `https://t.me/${cleanChannelId}` }];
     });
     inlineKeyboard.push([{ text: "Я подписался", callback_data: "check_subscription" }]);

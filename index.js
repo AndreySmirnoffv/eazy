@@ -10,7 +10,6 @@ const commands = JSON.parse(fs.readFileSync('./assets/commands/commands.json'));
 bot.setMyCommands(commands);
 
 bot.on('message', async (msg) => {
-    console.log(msg.text);
     const userId = msg.from.id;
     const chatId = msg.chat.id;
     const channels = [process.env.CHANNEL_1, process.env.CHANNEL_2];
@@ -21,8 +20,8 @@ bot.on('message', async (msg) => {
         if (!user) {
             db.push({
                 id: userId,
-                name: chatId,
-                chat: msg.chat.id,
+                name: msg.from.first_name,
+                chat: chatId,
                 sovaBalance: 0,
                 SVHCBalance: 0,
                 referralCode: `https://t.me/${process.env.BOT_LINK}?start=${chatId}`,
